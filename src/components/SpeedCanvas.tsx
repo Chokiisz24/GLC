@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from 'react';
-
+import { useEffect, useRef } from 'react';
 export default function SpeedCanvas() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 

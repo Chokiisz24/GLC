@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { ChevronRight } from 'lucide-react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import Gauge from './Gauge';
-import { ChevronRight, Gauge as GaugeIcon } from 'lucide-react';
 
 export default function Hero() {
   // Efecto Tilt 3D interactivo para el Gauge
