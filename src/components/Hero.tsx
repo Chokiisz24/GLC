@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import Gauge from './Gauge';
+import heroVideo from '../assets/video/hero-loop.mp4';
 
 export default function Hero() {
   // Efecto Tilt 3D interactivo para el Gauge
@@ -33,10 +34,37 @@ export default function Hero() {
     y.set(0);
   };
 
+  // Pausar los videos si el usuario prefiere menos movimiento
+  const fillVideoRef = useRef<HTMLVideoElement | null>(null);
+  const frameVideoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      fillVideoRef.current?.pause();
+      frameVideoRef.current?.pause();
+    }
+  }, []);
+
   return (
     <header className="hero position-relative overflow-hidden" id="inicio">
+      {/* Fondo de dos capas: difuminada (llena cualquier pantalla) +
+          nítida centrada (respeta la proporción real del video) */}
+      <div className="hero-video-bg">
+        <div className="hero-video-bg-fill">
+          <video ref={fillVideoRef} autoPlay muted loop playsInline preload="auto">
+            <source src={heroVideo} type="video/mp4" />
+          </video>
+        </div>
+        <div className="hero-video-bg-frame">
+          <video ref={frameVideoRef} autoPlay muted loop playsInline preload="auto">
+            <source src={heroVideo} type="video/mp4" />
+          </video>
+        </div>
+      </div>
+
       <div className="stripe-diag" />
-      
+
       {/* Línea de ruta animada */}
       <div className="route-line">
         <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
